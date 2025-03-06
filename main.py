@@ -3,10 +3,10 @@ import random
 import string
 import re
 
-# --- Streamlit Page Config ---
+
 st.set_page_config(page_title="Password Strength Meter", page_icon="🔐", layout="wide")
 
-# --- Custom CSS for Unique & Premium Design ---
+#  Custom CSS 
 st.markdown("""
     <style>
     body {
@@ -104,7 +104,7 @@ st.markdown("""
     unsafe_allow_html=True
 )
 
-# --- Function to Check Password Strength ---
+
 def check_password_strength(password):
     score = 0
     feedback = []
@@ -120,20 +120,19 @@ def check_password_strength(password):
     else: feedback.append("🔹 Add **at least one special character (!@#$%^&*)**.")
     return score, feedback
 
-# --- Function to Generate Strong Password ---
+# Function to Generate Strong Password
 def generate_password(length):
     characters = string.ascii_letters + string.digits + "!@#$%^&*"
     return ''.join(random.choice(characters) for _ in range(length))
 
-# --- UI Title ---
+#  UI Title
 st.markdown("<h1 class='main-title'>🔐 Password Strength Meter</h1>", unsafe_allow_html=True)
 st.markdown("<p class='sub-title'>Generate a strong password or check your password strength.</p>", unsafe_allow_html=True)
 
-# --- Default State (Initially Show "Generate Password") ---
 if "selected_option" not in st.session_state:
     st.session_state.selected_option = "Generate Password"
 
-# --- Unique Option Selection ---
+
 col1, col2 = st.columns(2)
 if col1.button("⚡ Generate Password", key="gen", help="Click to generate a strong password"):
     st.session_state.selected_option = "Generate Password"
@@ -142,7 +141,7 @@ if col2.button("🛡️ Check Password Strength", key="check", help="Click to ch
 
 st.write("<hr style='border-color: #00D4FF;'>", unsafe_allow_html=True)
 
-# --- Show Generate Password Section ---
+#  Show Generate Password Section 
 if st.session_state.selected_option == "Generate Password":
     st.subheader("✨ Generate a Strong Password")
     length = st.slider("Select Password Length", min_value=8, max_value=32, value=12)
@@ -150,7 +149,6 @@ if st.session_state.selected_option == "Generate Password":
         strong_password = generate_password(length)
         st.markdown(f"<div class='password-box'>{strong_password}</div>", unsafe_allow_html=True)
 
-# --- Show Check Password Strength Section (Only when clicked) ---
 if st.session_state.selected_option == "Check Password Strength":
     st.subheader("🛡️ Check Password Strength")
     password = st.text_input("Enter Password", type="password", help="Your password will be analyzed.")
